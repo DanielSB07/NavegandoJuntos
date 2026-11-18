@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Navegar Juntos · Red de Cuidado Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#2BB39B;--sky:#82B3E1;--pink:#F5B5CC;--coral:#EB5E5A;--sun:#FBB92A;--cream:#FAF5EE;--ink:#2d3a4a;--white:#fff;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+*{box-sizing:border-box}
+body{margin:0;font-family:Nunito,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:Fredoka,system-ui,sans-serif;margin:0 0 .4em;line-height:1.2}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--teal);color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;z-index:10}
+.logo{font-family:Fredoka,sans-serif;font-size:1.5rem;font-weight:700}
+nav a{color:#fff;text-decoration:none;margin-left:6px;font-weight:700;font-size:.92rem;padding:5px 10px;border-radius:999px}
+nav a:hover{background:rgba(255,255,255,.25)}
+section{padding:56px 20px;max-width:1040px;margin:auto}
+.hero{background:linear-gradient(135deg,var(--sky),var(--pink));border-radius:32px;margin:20px auto;text-align:center;position:relative;overflow:hidden;padding:70px 20px;max-width:1040px}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.12)}
+.hero p{font-size:1.15rem;color:#fff;max-width:620px;margin:0 auto 24px;font-weight:700}
+.blob{position:absolute;border-radius:50%;opacity:.45;animation:float 6s ease-in-out infinite;pointer-events:none}
+@keyframes float{50%{transform:translateY(-18px) rotate(8deg)}}
+.btn{display:inline-block;background:var(--sun);color:var(--ink);border:none;padding:14px 26px;border-radius:999px;font:700 1.05rem Fredoka,sans-serif;cursor:pointer;box-shadow:0 5px 0 #d9951a;transition:transform .1s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #d9951a}
+.btn.coral{background:var(--coral);color:#fff;box-shadow:0 5px 0 #b8403d}
+.btn.teal{background:var(--teal);color:#fff;box-shadow:0 5px 0 #1f8371}
+h2.title{font-size:2.1rem;text-align:center;margin-bottom:8px}
+.sub{text-align:center;margin-bottom:32px;font-weight:700;opacity:.8}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:#fff;border-radius:24px;padding:24px;box-shadow:0 6px 0 rgba(45,58,74,.08);border-top:8px solid var(--c);cursor:pointer;transition:transform .2s}
+.card:hover{transform:translateY(-5px) rotate(-.4deg)}
+.tag{display:inline-block;font-size:.75rem;font-weight:800;background:var(--c);color:#fff;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
+.card h3{margin-top:10px;font-size:1.3rem}
+.story{display:none;margin-top:10px;font-size:.98rem}
+.card.open .story{display:block}
+.hint{font-size:.85rem;color:#6b7785;font-weight:700;margin-top:8px}
+.featured{background:var(--teal);color:#fff;border-radius:28px;padding:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:center}
+.featured h3{font-size:1.8rem;color:var(--sun)}
+.phone{background:#fff;color:var(--ink);border-radius:26px;padding:18px;box-shadow:0 8px 0 rgba(0,0,0,.15);transform:rotate(-2deg)}
+.bubble{background:var(--sky);color:#fff;border-radius:18px 18px 18px 4px;padding:12px 14px;margin:8px 0;font-weight:700}
+.bubble.bad{background:var(--coral)}
+.game{background:#fff;border-radius:28px;padding:28px;box-shadow:0 8px 0 rgba(45,58,74,.08);text-align:center}
+.msg{background:var(--pink);border-radius:22px;padding:22px;font-size:1.15rem;font-weight:700;min-height:120px;display:flex;align-items:center;justify-content:center;margin:14px 0}
+.choices{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.feedback{min-height:72px;margin-top:16px;font-weight:700;border-radius:18px;padding:12px}
+.feedback.ok{background:#dff5ef;color:#136a5a}
+.feedback.no{background:#fde3e2;color:#9b2d2a}
+.stars{font-size:2rem;letter-spacing:6px;margin:8px 0}
+.meter{height:14px;background:#eee;border-radius:999px;overflow:hidden;margin-top:12px}
+.meter div{height:100%;background:linear-gradient(90deg,var(--teal),var(--sun));width:0;transition:width .4s}
+details{background:#fff;border-radius:18px;padding:16px 20px;margin-bottom:12px;box-shadow:0 4px 0 rgba(45,58,74,.07)}
+summary{font-family:Fredoka,sans-serif;font-size:1.15rem;cursor:pointer;font-weight:600}
+details[open] summary{color:var(--coral)}
+form{background:#fff;border-radius:26px;padding:28px;display:grid;gap:14px;box-shadow:0 6px 0 rgba(45,58,74,.08)}
+input,textarea,select{font:inherit;padding:12px 14px;border:3px solid #e6e1d8;border-radius:16px;background:var(--cream);color:var(--ink);width:100%}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--sky)}
+.wall{display:grid;gap:14px;margin-top:24px}
+.note{background:#fff;border-left:8px solid var(--sun);border-radius:16px;padding:16px 18px}
+.note b{font-family:Fredoka,sans-serif}
+.terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.term{background:#fff;border-radius:20px;padding:20px;border-left:8px solid var(--c);box-shadow:0 5px 0 rgba(45,58,74,.07)}
+.term h3{font-size:1.25rem;color:var(--c)}
+.term .ex{background:var(--cream);border-radius:12px;padding:10px 12px;margin:10px 0 0;font-size:.95rem}
+footer{background:var(--ink);color:#fff;text-align:center;padding:36px 20px;margin-top:40px}
+footer small{opacity:.75}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Navegar Juntos</div>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#historias">Historias</a>
+    <a href="#palabras">Palabras</a>
+    <a href="#detective">Detective Digital</a>
+    <a href="#semaforo">Semáforo</a>
+    <a href="#consejos">Consejos</a>
+    <a href="#comparte">Comparte</a>
+  </nav>
+</header>
+
+<div class="hero" id="inicio" style="margin-left:20px;margin-right:20px;max-width:calc(100% - 40px)">
+  <div class="blob" style="width:140px;height:140px;background:var(--sun);top:-30px;left:5%"></div>
+  <div class="blob" style="width:90px;height:90px;background:var(--teal);bottom:20px;right:8%;animation-delay:1s"></div>
+  <div class="blob" style="width:60px;height:60px;background:var(--coral);top:40px;right:20%;animation-delay:2s"></div>
+  <h1>¡Navegar juntos es más divertido!</h1>
+  <p>Un espacio para papás, mamás, cuidadores y niños y niñas de 7 a 13 años, donde aprendemos a cuidarnos en internet, paso a paso y de la mano.</p>
+  <a class="btn coral" href="#detective">¡Jugar a ser detective digital!</a>
+</div>
+
+<section id="historias">
+  <h2 class="title">Historias de nuestras familias</h2>
+  <p class="sub">Experiencias ilustrativas de cuidadores. Haz clic en cada tarjeta para leerla.</p>
+
+  <div class="featured" style="margin-bottom:28px">
+    <div>
+      <span class="tag" style="background:var(--coral)">Historia destacada</span>
+      <h3 style="margin-top:12px">La mascota legendaria de Sofía</h3>
+      <p>Sofía, de 8 años, estaba jugando en línea cuando le llegó un mensaje de un “jugador oficial” que le prometía monedas gratis. Le pidieron usuario, contraseña y el correo de sus papás. Sofía casi hizo clic, pero recordó lo que hablaron en casa y le contó a su mamá. Ese día aprendieron juntas a revisar antes de confiar.</p>
+    </div>
+    <div class="phone">
+      <div class="bubble bad">¡Felicidades! Ganaste una mascota legendaria. Haz clic aquí e ingresa tus datos</div>
+      <div class="bubble" style="background:var(--teal)">¿Pero por qué piden la clave?</div>
+      <div class="bubble bad" style="background:#b8403d">Ojo: eso es una trampa. ¡Mejor cuéntale a un adulto!</div>
+    </div>
+  </div>
+
+  <div class="cards" id="cards"></div>
+</section>
+
+<section id="palabras">
+  <h2 class="title">Palabras que todos debemos saber</h2>
+  <p class="sub">Qué significa cada palabra y un ejemplo sencillo.</p>
+  <div class="terms">
+    <div class="term" style="--c:var(--coral)"><h3>Ciberacoso</h3><p>Cuando alguien usa internet o los juegos para insultar, burlarse o amenazar a otra persona, una y otra vez.</p><p class="ex"><b>Ejemplo:</b> Un compañero escribe “nadie te quiere” en el chat del juego todos los días.</p></div>
+    <div class="term" style="--c:var(--teal)"><h3>Contraseña</h3><p>La clave secreta de tu cuenta. Solo debe saberla tu familia y tú.</p><p class="ex"><b>Ejemplo:</b> Si alguien te pide tu clave para “regalarte” algo, la respuesta es no.</p></div>
+    <div class="term" style="--c:var(--coral)"><h3>Robo de datos</h3><p>Cuando alguien consigue tu información, como claves, números de tarjeta o la cédula, para usarla sin permiso.</p><p class="ex"><b>Ejemplo:</b> Un mensaje falso que pide la clave del banco.</p></div>
+    <div class="term" style="--c:var(--sun)"><h3>Estafa</h3><p>Un engaño que promete algo bueno para quitarte dinero o cosas.</p><p class="ex"><b>Ejemplo:</b> “Gana un viaje, solo paga el envío”.</p></div>
+    <div class="term" style="--c:var(--sky)"><h3>Enlace</h3><p>Una dirección que te lleva a otra página. Puede parecer real y no serlo.</p><p class="ex"><b>Ejemplo:</b> Un link que dice “ganaste un premio”. Antes de tocarlo, pregunta a un adulto.</p></div>
+    <div class="term" style="--c:var(--teal)"><h3>Control parental</h3><p>Una herramienta para que la familia limite el tiempo o las páginas en el celular.</p><p class="ex"><b>Ejemplo:</b> Bloquear las compras sin permiso.</p></div>
+    <div class="term" style="--c:var(--sun)"><h3>Contenido inapropiado</h3><p>Videos, fotos o mensajes que no son para tu edad, como violencia o insultos.</p><p class="ex"><b>Ejemplo:</b> Un video que se pone muy violento de repente. Cierra y cuéntalo.</p></div>
+    <div class="term" style="--c:var(--coral)"><h3>Discurso de odio</h3><p>Mensajes que atacan a una persona o a un grupo por cómo son, de dónde vienen o cómo se ven.</p><p class="ex"><b>Ejemplo:</b> Un video que dice que cierta gente no merece respeto.</p></div>
+    <div class="term" style="--c:#2F7FC1"><h3>Perfil público</h3><p>Una cuenta que cualquier persona puede ver.</p><p class="ex"><b>Ejemplo:</b> Poner tu colegio y tu barrio en el perfil permite que desconocidos te encuentren.</p></div>
+    
+  </div>
+</section>
+
+<section id="detective" style="max-width:1040px">
+  <h2 class="title">Detective Digital </h2>
+  <p class="sub">Lee cada mensaje y decide: ¿es seguro o es una trampa? Gana estrellas.</p>
+  <div class="game">
+    <div id="progress" style="font-weight:800">Caso 1 de 5</div>
+    <div class="meter"><div id="bar"></div></div>
+    <div class="msg" id="msg"></div>
+    <div class="choices">
+      <button class="btn teal" onclick="answer(true)">¡Es seguro!</button>
+      <button class="btn coral" onclick="answer(false)">¡Es trampa!</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <div id="final" style="display:none">
+      <h3>¡Eres un gran detective!</h3>
+      <div class="stars" id="stars"></div>
+      <p id="scoreText"></p>
+      <button class="btn" onclick="restart()">Jugar otra vez</button>
+    </div>
+  </div>
+</section>
+
+<section id="semaforo">
+  <h2 class="title">Semáforo digital</h2>
+  <p class="sub">Tienes poco tiempo. Verde si es seguro, rojo si no debes hacerlo.</p>
+  <div class="game">
+    <div id="sLives" style="font-weight:800">Vidas: 3 · Puntos: 0</div>
+    <div class="meter"><div id="sTime" style="background:var(--coral)"></div></div>
+    <div class="msg" id="sMsg">Toca empezar cuando estés lista</div>
+    <div class="choices">
+      <button class="btn teal" onclick="sAns(true)">Verde: sí</button>
+      <button class="btn coral" onclick="sAns(false)">Rojo: no</button>
+    </div>
+    <div class="feedback" id="sFb"></div>
+    <div style="margin-top:14px"><button class="btn" id="sStart" onclick="sStart()">Empezar</button></div>
+  </div>
+</section>
+
+<section id="consejos">
+  <h2 class="title">Consejos para cuidar juntos</h2>
+  <p class="sub">Toca cada tema para ver qué hacer en casa.</p>
+  <details open>
+    <summary>Nunca compartas contraseñas ni datos bancarios por un mensaje o enlace</summary>
+    <p>Si alguien pide claves, el número de la tarjeta o el correo de los papás, la respuesta es no. Cierra el mensaje y avisa a un adulto.</p>
+  </details>
+  <details>
+    <summary>Revisa bien la dirección de las páginas antes de comprar</summary>
+    <p>Existen páginas que copian el diseño de tiendas reales. Revisa que el nombre esté escrito bien, que tenga candado y que la compra la haga un adulto.</p>
+  </details>
+  <details>
+    <summary>Activa los controles parentales y conversen sobre lo que ven</summary>
+    <p>Los controles ayudan, pero la conversación es lo que más protege. Pregunten juntos: ¿qué video te gustó hoy? ¿Algo te hizo sentir incómodo?</p>
+  </details>
+  <details>
+    <summary>Si alguien los trata mal en un juego, no respondas y guarda la prueba</summary>
+    <p>Haz una captura de pantalla, bloquea a la persona y cuéntale a un adulto de confianza. Nadie merece ser tratado con violencia, ni en línea ni en persona.</p>
+  </details>
+</section>
+
+<section id="comparte">
+  <h2 class="title">Comparte tu experiencia</h2>
+  <p class="sub">¿Tu familia vivió algo parecido? Cuéntanoslo para que otros cuidadores aprendan.</p>
+  <form onsubmit="addStory(event)">
+    <input id="name" placeholder="Tu nombre o un apodo" required>
+    <select id="type">
+      <option>Robo de datos o claves</option>
+      <option>Ciberacoso</option>
+      <option>Contenido inapropiado</option>
+      <option>Compras o estafas</option>
+      <option>Otro</option>
+    </select>
+    <textarea id="story" rows="4" placeholder="¿Qué pasó y cómo lo resolvieron?" required></textarea>
+    <button class="btn teal" type="submit">Enviar mi historia</button>
+  </form>
+  <div class="wall" id="wall"></div>
+</section>
+
+<footer>
+  <div style="font-family:Fredoka;font-size:1.3rem;margin-bottom:8px">Navegar Juntos</div>
+  <small>Red de Cuidado Digital para la primera infancia y sus cuidadores · Propuesta de Natalia Castro, Evelyn Forero, Paula Rodríguez y Laura Vargas · Universidad Distrital Francisco José de Caldas · Bogotá D.C., 2026</small>
+</footer>
+
+<script>
+const storiesData=[
+ {c:"var(--teal)",tag:"Robo de datos",t:"El mensaje del “premio”",s:"Un niño recibió en su juego un mensaje de una cuenta con insignia oficial. Le prometían monedas gratis si ingresaba sus datos. Su papá lo vio a tiempo y lo convirtió en una lección: los premios reales no piden contraseñas."},
+ {c:"var(--coral)",tag:"Compras",t:"El chigüiro que no debió llegar",s:"Una niña de 8 años usó el teléfono sin controles y entró a una página de comercio de animales. Quiso comprar un chigüiro. Desde entonces, la familia activó la verificación de compras y conversa antes de cada pago."},
+ {c:"var(--sun)",tag:"Ciberacoso",t:"Palabras que duelen en el juego",s:"Durante una partida en línea, un jugador le escribió insultos y gestos obscenos a una niña. Ella no respondió, hizo captura y se lo contó a su mamá. Juntas reportaron la cuenta y hablaron de cómo ser respetuosos también con quien juega en línea."},
+ {c:"var(--sky)",tag:"Contenido",t:"Un video que no era para niños",s:"Mientras veía videos, apareció un contenido con discursos de odio. El niño se asustó. Su cuidadora le explicó que no era su culpa, activó los controles de la aplicación y acordaron avisar siempre que algo les incomode."},
+ {c:"var(--sun)",tag:"Privacidad",t:"El perfil con el colegio",s:"Una niña de 9 años puso su foto, el nombre de su colegio y su barrio en un perfil público. Un desconocido le escribió diciendo que la conocía. Su mamá cambió el perfil a privado y conversaron sobre qué datos sí se pueden compartir."},
+ {c:"#2F7FC1",tag:"Contacto",t:"El chat con alguien que no conoce",s:"Un niño de 10 años empezó a hablar con alguien del juego que decía tener su misma edad. Después le pidió una foto y que no le contara a sus papás. El niño lo notó raro y se lo contó a su papá, que bloqueó la cuenta y la reportó."}
+];
+const cardsEl=document.getElementById('cards');
+storiesData.forEach((d,i)=>{
+ const el=document.createElement('div');
+ el.className='card';el.style.setProperty('--c',d.c);
+ el.innerHTML=`<span class="tag" style="background:${d.c}">${d.tag}</span><h3>${d.t}</h3><div class="hint">Toca para leer ▼</div><p class="story">${d.s}</p>`;
+ el.onclick=()=>{el.classList.toggle('open');el.querySelector('.hint').style.display=el.classList.contains('open')?'none':'block';};
+ cardsEl.appendChild(el);
+});
+
+const allCases=[
+ {m:"Te llega un SMS: 'Su cuenta fue bloqueada. Entre aquí para desbloquearla' y un enlace raro. Pide su clave.",safe:false,why:"¡Trampa! Los bancos no bloquean cuentas por mensaje con un enlace. Llama al número que aparece en tu tarjeta."},
+ {m:"Un mensaje dice: 'Ganaste un viaje a Cartagena. Solo paga $20.000 de envío para reclamarlo.'",safe:false,why:"¡Trampa! Si tienes que pagar para recibir un premio, es una estafa."},
+ {m:"Llega un WhatsApp de un número nuevo: 'Mami, cambié de número. Transfiéreme plata hoy, es urgente.'",safe:false,why:"¡Trampa! Antes de pagar, llama a tu familiar por el número que siempre usas."},
+ {m:"En el juego aparece: 'Dame tu contraseña y te regalo 1.000 diamantes'.",safe:false,why:"¡Trampa! Nadie que sea de verdad del juego te pide tu contraseña."},
+ {m:"Un desconocido en el chat del juego te escribe: 'Dime dónde vives y te mando un regalo'.",safe:false,why:"¡Trampa! Nunca digas dónde vives a alguien que no conoces."},
+ {m:"Una página dice: 'Tu celular tiene 5 virus. Descarga este programa ahora'.",safe:false,why:"¡Trampa! Los celulares no avisan así. Ese programa puede robar tu información."},
+ {m:"Te llega: 'Felicidades, eres el ganador del sorteo del Éxito. Escribe tu cédula y tu dirección'.",safe:false,why:"¡Trampa! Un sorteo de verdad no pide tu cédula por mensaje."},
+ {m:"Te llama alguien que dice ser de la EPS y te pide la clave de tu cuenta.",safe:false,why:"¡Trampa! Nadie de la EPS te pide claves por teléfono. Cuelga y llama tú al número oficial."},
+ {m:"Un mensaje dice: 'Su paquete no pudo entregarse. Pague $3.000 en este link'.",safe:false,why:"¡Trampa! Si no esperabas un paquete, no pagues. Revisa con la empresa por su número oficial."},
+ {m:"Una tienda nueva vende un celular a la mitad de precio, pero solo acepta transferencia directa.",safe:false,why:"¡Trampa! Si no puedes pagar con tarjeta y es muy barato, puede ser una estafa."},
+ {m:"Un mensaje dice: 'Tenemos tu foto en una página prohibida. Paga para borrarla'.",safe:false,why:"¡Trampa! Es una amenaza para asustarte. No pagues y cuéntale a un adulto."},
+ {m:"Un amigo de Instagram te escribe: 'Mira este video de ti' con un enlace que no conoces.",safe:false,why:"¡Trampa! No abras enlaces que no esperabas, aunque parezca de un amigo."},
+ {m:"Una app de linterna pide permiso para leer tus mensajes y tus contactos.",safe:false,why:"¡Trampa! Una linterna no necesita leer tus mensajes. Di que no."},
+ {m:"En un juego: 'Entra a este enlace para tener monedas gratis. Solo escribe tu usuario'.",safe:false,why:"¡Trampa! Los juegos no regalan cosas por enlaces raros. No escribas tu usuario."},
+ {m:"Un mensaje dice: 'Tu pasaporte está por vencer. Llena tus datos aquí'.",safe:false,why:"¡Trampa! Tu pasaporte no se renueva por mensaje. Ve a la entidad oficial."},
+ {m:"Alguien en el juego te pide: 'Mándame una foto tuya para ser mi amigo'.",safe:false,why:"¡Trampa! No mandes fotos a desconocidos. Bloquéalo y cuéntale a un adulto."},
+ {m:"Un mensaje dice: 'Tu cuenta de Nequi se va a cerrar. Escribe tu clave aquí para no perder tu plata'.",safe:false,why:"¡Trampa! Nequi nunca te pide la clave por un enlace. Ni la escribas."},
+ {m:"Un juego te pide número de tarjeta para 'verificar tu edad'.",safe:false,why:"¡Trampa! Los juegos para niños no necesitan tu tarjeta. Pregunta a tu papá o mamá."},
+ {m:"Un desconocido te escribe: '¿Estás sola en casa?'.",safe:false,why:"¡No respondas! Nunca digas si estás sola. Bloquéalo y cuéntale a un adulto."},
+ {m:"Un mensaje de número raro: 'Mira las fotos vergonzosas que subieron de ti' con un link.",safe:false,why:"¡Trampa! No abras el link. Guarda el mensaje y cuéntale a un adulto."},
+ {m:"Un compañero escribe en el chat del juego: 'Eres una tonta, nadie te quiere'.",safe:false,why:"¡Eso es ciberacoso! No respondas, haz captura, bloquéalo y cuéntale a un adulto."},
+ {m:"Un video dice: 'Comparte esto con 10 amigos y te regalan un celular'.",safe:false,why:"¡Trampa! Nadie regala celulares por compartir videos."},
+ {m:"En la calle, un señor te ofrece un celular 'caído del camión' por $30.000.",safe:false,why:"¡No compres! Podría ser robado y tú no debes cargar con eso. Aléjate y avisa a un adulto."},
+ {m:"En el parque, un señor te dice: 'Tu mamá me mandó por ti, vamos'.",safe:false,why:"¡No te vayas! Solo sigue a un adulto que tu familia conoce. Ve con tu mamá y cuéntale."},
+ {m:"Una app de juegos dice: 'Ingresa el número de tu tarjeta para activar tu premio'.",safe:false,why:"¡Trampa! Un premio no necesita tu tarjeta. Pide ayuda a tu papá o mamá."},
+ {m:"Mamá en WhatsApp: '¿Llegaste bien al colegio? Te quiero'.",safe:true,why:"¡Seguro! Es un mensaje de tu mamá, cariñoso y normal."},
+ {m:"El banco te avisa: 'Compra de $25.000 en la tienda de la esquina'. No pide clave ni tiene enlaces.",safe:true,why:"¡Seguro! Si sí compraste, todo bien. Si no fuiste tú, llama al número de tu tarjeta."},
+ {m:"Tu abuela te llama y te cuenta un chiste de su perro.",safe:true,why:"¡Seguro! Hablar con tu familia por teléfono es normal."},
+ {m:"La agenda del colegio dice: 'El lunes no hay clase por el puente festivo'.",safe:true,why:"¡Seguro! Es un aviso del colegio que puedes confirmar con tu profe."},
+ {m:"Tu primo te escribe: '¿Vamos a jugar fútbol mañana?'.",safe:true,why:"¡Seguro! Es un plan normal con alguien que conoces."},
+ {m:"Nequi te avisa en la app oficial: 'Recibiste $50.000 de Juan'.",safe:true,why:"¡Seguro! Lo revisaste en la app oficial, sin enlaces raros."},
+ {m:"Un jugador del juego te dice: 'Buen juego, ¿jugamos otra?'.",safe:true,why:"¡Seguro! Jugar con otros es divertido, pero no compartas datos personales."},
+ {m:"La profe escribe en el grupo: 'Recuerden traer la cartulina el viernes'.",safe:true,why:"¡Seguro! Es un mensaje del colegio para recordar algo."},
+ {m:"Entras a una página con candado y el nombre bien escrito, la que tu mamá revisó antes.",safe:true,why:"¡Seguro! Revisar el nombre y el candado es muy buena costumbre."},
+ {m:"Un adulto de tu casa te dice en persona: 'Vamos al parque mañana'.",safe:true,why:"¡Seguro! Hablar cara a cara con tu familia es lo mejor."},
+ {m:"La tienda de siempre te escribe, desde el número que ya tienes guardado: 'Tu pedido llegó'.",safe:true,why:"¡Seguro! Es tu tienda conocida. Igual confirma en la tienda si tienes dudas."},
+ {m:"Tu compañero de salón te escribe: '¿Me ayudas con la tarea de matemáticas?'.",safe:true,why:"¡Seguro! Ayudar en la tarea entre compañeros es buena idea."},
+ {m:"Una app de dibujo te dice: 'Hoy practica 10 minutos de dibujo'.",safe:true,why:"¡Seguro! Es un recordatorio de una app que tú ya usas."},
+ {m:"Tu tía te escribe: 'Mañana te paso el mercado'.",safe:true,why:"¡Seguro! Es un mensaje normal de tu familia."},
+ {m:"Un jugador te pide ayuda para pasar un nivel. No pide datos ni dinero.",safe:true,why:"¡Seguro! Ayudar en el juego está bien, sin compartir datos."},
+ {m:"Tu mamá te escribe: 'Si no contestas en 5 minutos, llama a tu abuela'.",safe:true,why:"¡Seguro! Es un mensaje normal de tu mamá."},
+ {m:"Tu EPS te avisa en su app oficial: 'Tu cita está confirmada para el martes a las 8 a.m.'.",safe:true,why:"¡Seguro! La revisaste en la app oficial. Puedes llamar a confirmar."},
+ {m:"Tu profesora te escribe desde el correo del colegio: 'Felicitaciones por tu dibujo'.",safe:true,why:"¡Seguro! Es un mensaje del correo del colegio que conoces."},
+ {m:"La app del supermercado que ya usas te muestra un cupón de 10%.",safe:true,why:"¡Seguro! Es una app que ya conoces. Igual revisa el cupón antes de usarlo."},
+ {m:"Tu mamá te dice en persona: 'Hoy compramos helado'.",safe:true,why:"¡Seguro! Es un plan con tu familia, cara a cara."},
+ {m:"Tu papá te escribe: 'Llego a las 6, ¿quieres que pida pizza?'.",safe:true,why:"¡Seguro! Es un mensaje de tu papá. Pregunta a él antes de pedir cosas."},
+ {m:"Tu profe te avisa en clase: 'El examen es el lunes'.",safe:true,why:"¡Seguro! Es un aviso de tu profe en persona."},
+ {m:"La biblioteca del barrio te avisa: 'Tu libro está listo para recoger'.",safe:true,why:"¡Seguro! Es un aviso de un lugar que conoces. Confirma yendo en persona."},
+ {m:"Tu hermano en casa te pregunta: '¿Me prestas el lápiz?'.",safe:true,why:"¡Seguro! Es una pregunta normal de tu hermano."}
+];
+let cases=[],idx=0,score=0,locked=false;
+function shuffle(a){return a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);}
+function render(){
+ const c=cases[idx];
+ document.getElementById('msg').textContent=c.m;
+ document.getElementById('progress').textContent=`Caso ${idx+1} de ${cases.length}`;
+ document.getElementById('bar').style.width=(idx/cases.length*100)+'%';
+ const f=document.getElementById('feedback');f.className='feedback';f.textContent='';
+ locked=false;
+}
+function answer(userSaysSafe){
+ if(locked)return;locked=true;
+ const c=cases[idx];const correct=userSaysSafe===c.safe;
+ if(correct)score++;
+ const f=document.getElementById('feedback');
+ f.className='feedback '+(correct?'ok':'no');
+ f.textContent=(correct?'¡Muy bien! ':'Casi. ')+c.why;
+ setTimeout(()=>{
+  idx++;
+  if(idx<cases.length){render();}
+  else{
+   document.getElementById('bar').style.width='100%';
+   document.getElementById('msg').textContent='¡Terminaste el juego!';
+   document.getElementById('feedback').textContent='';
+   document.querySelector('.choices').style.display='none';
+   document.getElementById('final').style.display='block';
+   document.getElementById('progress').textContent='¡Completado!';
+   const st=Math.round(score/cases.length*5);document.getElementById('stars').textContent='★'.repeat(st)+'☆'.repeat(5-st);
+   document.getElementById('scoreText').textContent=`Acertaste ${score} de ${cases.length}. ¡Recuerda: si algo parece demasiado bueno, pregunta primero!`;
+  }
+ },1800);
+}
+function restart(){
+ cases=shuffle(allCases).slice(0,10);
+ idx=0;score=0;
+ document.querySelector('.choices').style.display='flex';
+ document.getElementById('final').style.display='none';
+ render();
+}
+restart();
+
+const sItems=[
+ {t:"Compartir tu contraseña con alguien que no conoces",ok:false},
+ {t:"Hablar con tu mamá antes de descargar una app nueva",ok:true},
+ {t:"Poner tu nombre completo y tu colegio en tu perfil público",ok:false},
+ {t:"Pedirle a un adulto que revise un enlace raro",ok:true},
+ {t:"Aceptar a un desconocido como amigo en el juego",ok:false},
+ {t:"Cerrar el juego cuando alguien te trata mal",ok:true},
+ {t:"Enviar fotos de tu casa a personas que no conoces",ok:false},
+ {t:"Usar el control parental que tu familia configuró",ok:true},
+ {t:"Pagar un premio que te pidieron por mensaje",ok:false},
+ {t:"Guardar una captura cuando te insultan",ok:true},
+ {t:"Dar tu usuario y tu clave para ganar monedas",ok:false},
+ {t:"Preguntar a tu papá antes de comprar algo",ok:true},
+ {t:"Responder insultos con más insultos",ok:false},
+ {t:"Bloquear a alguien que te hace sentir mal",ok:true},
+ {t:"Hacer clic en un enlace que dice que ganaste un celular",ok:false},
+ {t:"Cerrar sesión en un computador que no es tuyo",ok:true}
+];
+let sDeck=[],sIdx=0,sPts=0,sLivesN=3,sTimer=null,sLeft=100,sCur=null;
+function updateS(){document.getElementById('sLives').textContent='Vidas: '+Math.max(sLivesN,0)+' · Puntos: '+sPts;}
+function sStart(){sDeck=shuffle(sItems).slice(0,12);sIdx=0;sPts=0;sLivesN=3;document.getElementById('sStart').style.display='none';document.getElementById('sFb').className='feedback';updateS();sNext();}
+function sNext(){if(sLivesN<=0||sIdx>=sDeck.length){sEnd();return;}sCur=sDeck[sIdx++];document.getElementById('sMsg').textContent=sCur.t;document.getElementById('sFb').textContent='';document.getElementById('sFb').className='feedback';sLeft=100;document.getElementById('sTime').style.width='100%';clearInterval(sTimer);sTimer=setInterval(sTick,100);}
+function sTick(){sLeft-=100/30;document.getElementById('sTime').style.width=Math.max(sLeft,0)+'%';if(sLeft<=0)sAns(null);}
+function sAns(v){if(!sCur)return;clearInterval(sTimer);const ok=v===sCur.ok;const fb=document.getElementById('sFb');if(ok){const p=10+Math.round(Math.max(sLeft,0)/10);sPts+=p;fb.className='feedback ok';fb.textContent='¡Bien! +'+p+' puntos';}else{sLivesN--;fb.className='feedback no';fb.textContent=(v===null?'Se acabó el tiempo. ':'Esa no era la respuesta. ')+(sCur.ok?'Era seguro.':'No era seguro.');}sCur=null;updateS();setTimeout(sNext,1400);}
+function sEnd(){clearInterval(sTimer);sCur=null;document.getElementById('sMsg').textContent='¡Fin del juego! Hiciste '+sPts+' puntos';document.getElementById('sTime').style.width='0';const b=document.getElementById('sStart');b.textContent='Jugar otra vez';b.style.display='inline-block';}
+
+const wallData=[
+ {n:"Mariana, mamá de Tomás",t:"Robo de datos",s:"Tomás recibió un enlace para reclamar un regalo. Antes de hacer clic me lo mostró. Ahora revisamos juntos cada enlace."}
+];
+function drawWall(){
+ document.getElementById('wall').innerHTML=wallData.map(w=>`<div class="note"><b>${escapeHtml(w.n)}</b> · <i>${escapeHtml(w.t)}</i><p style="margin:6px 0 0">${escapeHtml(w.s)}</p></div>`).join('');
+}
+function escapeHtml(x){return String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function addStory(e){
+ e.preventDefault();
+ wallData.unshift({n:document.getElementById('name').value,t:document.getElementById('type').value,s:document.getElementById('story').value});
+ e.target.reset();drawWall();
+}
+drawWall();
+</script>
+</body>
+</html>
